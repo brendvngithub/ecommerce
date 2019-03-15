@@ -1,1 +1,0 @@
-{"virtualbox":{"/var/www":{"create":true,"group":"www-data","owner":"www-data","guestpath":"/var/www","hostpath":"/home/brend/projects/ecommerce","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/home/brend/projects/ecommerce","disabled":false,"__vagrantfile":true}}}
