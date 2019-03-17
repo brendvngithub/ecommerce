@@ -1,0 +1,11 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "dependencies": {
+    "foundation-sites": "^6.5.3",
+    "jquery": "~2.2",
+    "motion-ui": "^2.0.3",
+    "slick-carousel": "^1.8.1",
+    "what-input": "~4.1"
+  }
+}
