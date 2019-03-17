@@ -24,7 +24,7 @@ echo "Installing Nginx"
 
 #PHP
 echo "Installing PHP"
-	sudo apt-get install php7.2 php7.2-common php7.2-cli php7.2-fpm -y
+	sudo apt-get install php7.2 php7.2-common php7.2-cli php7.2-fpm php7.2-xdebug -y
 	php -v
 # php-dev php-zip php-curl php-xmlrpc php-gd php-mysql php-mbstring php-xml -y > /dev/null
 	sudo apt-get upgrade
@@ -34,6 +34,23 @@ echo "date.timezone = UTC" >> /etc/php/7.2/fpm/php.ini
 echo "date.timezone = UTC" >> /etc/php/7.2/cli/php.ini
 echo "cgi.fix_pathinfo=0" >> /etc/php/7.2/fpm/php.ini
 
+cat << 'XDEBUG_DEVBOX_CONF' > /etc/php/7.2/mods-available/xdebug.ini
+zend_extension=xdebug.so
+xdebug.remote_enable = 1
+xdebug.remote_port = 9000
+# xdebug.remote_log = /vagrant/xdebug.log
+xdebug.idekey = PHPSTORM
+xdebug.show_error_trace = 1
+xdebug.remote_autostart = 0
+xdebug.file_link_format = phpstorm://open?%f:%l
+
+
+xdebug.remote_host=10.0.2.2
+xdebug.profiler_enable=true
+xdebug.profiler_output_dir="/tmp"
+XDEBUG_DEVBOX_CONF
+
+    sudo service php7.2-fpm restart
 
 echo "Configuring Nginx"
 	sudo cp /var/www/provision/nginx_vhost /etc/nginx/sites-available/nginx_vhost
