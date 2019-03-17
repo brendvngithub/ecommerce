@@ -3,4 +3,4 @@
 *.log
 *.vagrant
 node_modules/
-
+mix-manifest.json
