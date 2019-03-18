@@ -11,5 +11,6 @@ if (!isset ($_SESSION)) {
 
 //Load environment variables
 require_once __DIR__ . '/../app/config/_env.php';
+new \App\classes\Database();
 require_once __DIR__ . '/../app/routing/route.php';
 new \App\RouteDispatcher($router);

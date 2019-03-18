@@ -1,5 +1,5 @@
-CREATE TABLE store.products (
-	id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE products (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	name VARCHAR(255) NOT NULL,
 	price FLOAT NULL,
 	description varchar(255) NULL,
@@ -13,8 +13,8 @@ CREATE TABLE store.products (
 )
 ENGINE=InnoDB;
 
-CREATE TABLE store.categories (
-	id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE categories (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL,
 	slug varchar(255) NULL,
 	created_at TIMESTAMP NULL,
@@ -24,52 +24,27 @@ CREATE TABLE store.categories (
 )
 ENGINE=InnoDB;
 
-CREATE TABLE store.sub_categories (
-	id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE sub_categories (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	name varchar(255) NOT NULL,
 	slug varchar(255) NULL,
-	category_id INT NOT NULL,
+	category_id INT UNSIGNED NOT NULL,
 	created_at TIMESTAMP NULL,
 	updated_at TIMESTAMP NULL,
 	deleted_at TIMESTAMP NULL,
-	PRIMARY KEY (`id`)
+	PRIMARY KEY (`id`),
+	CONSTRAINT `sub_categories_FK_1`
+        FOREIGN KEY (`category_id`)
+        REFERENCES `categories` (`id`)
 )
 ENGINE=InnoDB;
 
-CREATE TABLE store.orders (
-	id INT NOT NULL AUTO_INCREMENT,
-	user_id INT NOT NULL,
-	product_id INT NOT NULL,
-	unit_price FLOAT NULL,
-	total FLOAT NULL,
-	status varchar(255) NULL,
-	order_no varchar(255) NULL,
-	created_at TIMESTAMP NULL,
-	updated_at TIMESTAMP NULL,
-	deleted_at TIMESTAMP NULL,
-	PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB;
-
-CREATE TABLE store.payments (
-	id INT NOT NULL AUTO_INCREMENT,
-	user_id INT NOT NULL,
-	order_no varchar(255) NULL,
-	amount FLOAT NULL,
-	status varchar(255) NULL,
-	created_at TIMESTAMP NULL,
-	updated_at TIMESTAMP NULL,
-	deleted_at TIMESTAMP NULL,
-	PRIMARY KEY (`id`)
-)
-ENGINE=InnoDB;
-
-CREATE TABLE store.users (
-	id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE users (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	username varchar(255) NULL,
 	fullname varchar(255) NULL,
 	email varchar(255) NULL,
-	pasword varchar(255) NULL,
+	password varchar(255) NULL,
 	address varchar(255) NULL,
 	`role` varchar(50) NULL,
 	created_at TIMESTAMP NULL,
@@ -78,3 +53,41 @@ CREATE TABLE store.users (
 	PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB;
+
+CREATE TABLE orders (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	user_id INT UNSIGNED NOT NULL,
+	product_id INT UNSIGNED NOT NULL,
+	unit_price FLOAT NULL,
+	total FLOAT NULL,
+	status varchar(255) NULL,
+	order_no varchar(255) NULL,
+	created_at TIMESTAMP NULL,
+	updated_at TIMESTAMP NULL,
+	deleted_at TIMESTAMP NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `orders_FK_1`
+        FOREIGN KEY (`product_id`)
+        REFERENCES `products` (`id`),
+  CONSTRAINT `orders_FK_2`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`id`)
+)
+ENGINE=InnoDB;
+
+CREATE TABLE payments (
+	id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+	user_id INT UNSIGNED NOT NULL,
+	order_no varchar(255) NULL,
+	amount FLOAT NULL,
+	status varchar(255) NULL,
+	created_at TIMESTAMP NULL,
+	updated_at TIMESTAMP NULL,
+	deleted_at TIMESTAMP NULL,
+	PRIMARY KEY (`id`),
+	CONSTRAINT `payments_FK_2`
+        FOREIGN KEY (`user_id`)
+        REFERENCES `users` (`id`)
+)
+ENGINE=InnoDB;
+
